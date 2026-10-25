@@ -1,0 +1,11 @@
+﻿# The app of instance %i asks for an update with an empty file in update-requests.
+# `lumenbot-instance start` enables this unit for each instance.
+[Unit]
+Description=Update requests of LumenBOT instance %i
+
+[Path]
+PathExists=/srv/lumenbot/%i/update-requests/update-stage
+PathExists=/srv/lumenbot/%i/update-requests/update-install
+
+[Install]
+WantedBy=paths.target

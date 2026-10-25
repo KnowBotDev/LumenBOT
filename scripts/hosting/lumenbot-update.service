@@ -1,0 +1,14 @@
+﻿# Downloads and unpacks a newer LumenBOT release next to the running one. lumenbot-update.timer starts
+# it; lumenbot-update-apply.service moves the release into place at the next start of the server.
+[Unit]
+Description=Stage an LumenBOT update
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/opt/LumenBOT/hosted/lumenbot-hosted-update stage
+Nice=19
+IOSchedulingClass=idle
+CPUWeight=idle
+TimeoutStartSec=30min

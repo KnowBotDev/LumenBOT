@@ -1,0 +1,12 @@
+﻿# Stages the newest release, or stops LumenBOT, moves the staged release into place and starts LumenBOT
+# again, when an owner, an admin or a permitted member asks for it in Server Settings > Updates.
+[Unit]
+Description=Update LumenBOT on request
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/opt/LumenBOT/hosted/lumenbot-hosted-update request
+# A download and an apply: the limits of lumenbot-update.service and lumenbot-update-apply.service.
+TimeoutStartSec=45min

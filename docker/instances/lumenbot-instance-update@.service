@@ -1,0 +1,10 @@
+﻿# Pulls the image of instance %i, and for an install makes the container again. `setup` replaces
+# /opt/lumenbot-docker/instances/ with the folder of lumenbot-instance.
+[Unit]
+Description=Update LumenBOT instance %i
+After=docker.service
+
+[Service]
+Type=oneshot
+ExecStart=/opt/lumenbot-docker/instances/lumenbot-instance update-request %i
+TimeoutStartSec=45min

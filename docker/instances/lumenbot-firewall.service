@@ -1,0 +1,14 @@
+﻿# Applies the firewall of the LumenBOT instances before Docker starts their containers.
+# `lumenbot-instance setup` installs it. See docs/docker.md#several-instances-on-one-host.
+[Unit]
+Description=Firewall of the LumenBOT Docker instances
+After=ufw.service
+Before=docker.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/opt/lumenbot-docker/instances/lumenbot-firewall
+
+[Install]
+WantedBy=multi-user.target docker.service

@@ -1,0 +1,10 @@
+﻿# Backs up instance %i and verifies the backup. lumenbot-instance-backup@%i.timer starts it. `setup`
+# replaces /opt/lumenbot-docker/instances/ with the folder of lumenbot-instance.
+[Unit]
+Description=Back up LumenBOT instance %i
+After=docker.service
+
+[Service]
+Type=oneshot
+ExecStart=/opt/lumenbot-docker/instances/lumenbot-instance backup %i --verify
+TimeoutStartSec=6h
