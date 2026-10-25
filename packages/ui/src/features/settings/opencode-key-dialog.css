@@ -1,0 +1,76 @@
+﻿/*
+ * The OpenCode Go key dialog. It opens on top of the settings modal, so its layer is one above
+ * the shared dialog layer rather than the same one -- both portals are children of `body`, and
+ * relying on insertion order alone would break the first time a caller mounts it from elsewhere.
+ *
+ * Minimal on purpose: left-aligned title with one dynamic description line instead of stacked
+ * notice cards, matching the small confirm dialogs.
+ */
+
+.opencode-key-backdrop {
+  z-index: calc(var(--lumenbot-layer-dialog) + 1);
+}
+
+.opencode-key-dialog {
+  width: min(400px, 100%);
+  max-height: calc(100dvh - var(--lumenbot-space-6) * 2);
+  overflow-y: auto;
+  outline: 0;
+  border-radius: var(--lumenbot-radius-xl);
+  background: var(--lumenbot-bg-control);
+  padding: var(--lumenbot-space-6);
+  color: var(--lumenbot-text-primary);
+  animation: opencode-key-dialog-in var(--lumenbot-duration-slow) var(--lumenbot-ease-out) both;
+}
+
+.opencode-key-header {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--lumenbot-space-1);
+}
+
+.opencode-key-title {
+  margin: 0;
+  font-size: var(--lumenbot-text-xl);
+  line-height: var(--lumenbot-leading-xl);
+  font-weight: var(--lumenbot-weight-semibold);
+  letter-spacing: var(--lumenbot-tracking-tight);
+}
+
+.opencode-key-description {
+  margin: 0;
+  color: var(--lumenbot-text-muted);
+  font-size: var(--lumenbot-text-md);
+  line-height: var(--lumenbot-leading-md);
+}
+
+.opencode-key-status-dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin-right: var(--lumenbot-space-2);
+  border-radius: var(--lumenbot-radius-pill);
+  background: var(--lumenbot-success);
+}
+
+.opencode-key-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--lumenbot-space-4);
+  margin: var(--lumenbot-space-4) 0 0;
+}
+
+.opencode-key-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: var(--lumenbot-space-2);
+}
+
+@keyframes opencode-key-dialog-in {
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+}

@@ -1,0 +1,397 @@
+﻿/* The shared integration layout: see IntegrationLayout.tsx. */
+
+.integration-logo-tile {
+  --integration-tile: 36px;
+  display: inline-grid;
+  flex: none;
+  width: var(--integration-tile);
+  height: var(--integration-tile);
+  place-items: center;
+  border: 1px solid var(--lumenbot-border);
+  border-radius: var(--lumenbot-radius-md);
+  background: var(--lumenbot-bg-surface-raised);
+  color: var(--lumenbot-text-primary);
+}
+
+.integration-logo-tile[data-size="lg"] {
+  --integration-tile: 48px;
+  border-radius: var(--lumenbot-radius-lg);
+}
+
+.integration-logo-tile > svg {
+  width: 55%;
+  height: 55%;
+}
+
+.integration-status {
+  gap: var(--lumenbot-space-1);
+}
+
+.integration-status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: var(--lumenbot-radius-pill);
+  background: currentColor;
+}
+
+.integration-status[data-status="unavailable"] .integration-status-dot {
+  background: var(--lumenbot-transparent);
+  box-shadow: inset 0 0 0 1px currentColor;
+}
+
+/* ------------------------------------------------ page header */
+
+.integration-detail-header {
+  display: flex;
+  gap: var(--lumenbot-space-3);
+  align-items: center;
+}
+
+.integration-detail-copy {
+  display: grid;
+  flex: 1;
+  gap: var(--lumenbot-space-1);
+  min-width: 0;
+}
+
+.integration-detail-title {
+  display: flex;
+  gap: var(--lumenbot-space-2);
+  align-items: center;
+}
+
+.integration-detail-actions {
+  display: flex;
+  flex: none;
+  gap: var(--lumenbot-space-2);
+}
+
+/* ------------------------------------------------ connect dialog */
+
+.integration-wizard {
+  display: grid;
+  gap: var(--lumenbot-space-4);
+  padding: var(--lumenbot-space-6);
+  border-radius: var(--lumenbot-radius-xl);
+  background: var(--lumenbot-bg-sheet);
+  box-shadow: var(--lumenbot-shadow-dialog);
+}
+
+.integration-wizard-head {
+  display: grid;
+  gap: var(--lumenbot-space-2);
+  justify-items: center;
+  text-align: center;
+}
+
+.integration-wizard-logos {
+  display: flex;
+  gap: var(--lumenbot-space-2);
+  align-items: center;
+  margin-bottom: var(--lumenbot-space-2);
+}
+
+.integration-wizard-app {
+  width: 36px;
+  height: 36px;
+}
+
+/* Dots flow from LumenBOT to the other app while the flow runs. */
+.integration-wizard-link {
+  width: 40px;
+  height: 2px;
+  border-radius: var(--lumenbot-radius-pill);
+  background:
+    radial-gradient(circle, var(--lumenbot-accent) 0 1px, var(--lumenbot-transparent) 1.5px) 0 50% / 8px 2px repeat-x;
+  animation: integration-wizard-flow 0.6s linear infinite;
+}
+
+@keyframes integration-wizard-flow {
+  to {
+    background-position-x: 8px;
+  }
+}
+
+.integration-wizard-logos[data-link="connected"] .integration-wizard-link {
+  background: var(--lumenbot-success);
+  animation: none;
+}
+
+.integration-wizard-logos[data-link="broken"] .integration-wizard-link {
+  background:
+    radial-gradient(circle, var(--lumenbot-border-strong) 0 1px, var(--lumenbot-transparent) 1.5px) 0 50% / 8px 2px
+    repeat-x;
+  animation: none;
+}
+
+/* The other app breathes while LumenBOT waits for it. */
+.integration-wizard-target {
+  display: inline-grid;
+  border-radius: var(--lumenbot-radius-md);
+}
+
+.integration-wizard-logos[data-link="connecting"] .integration-wizard-target {
+  animation: integration-wizard-pulse 1.8s var(--lumenbot-ease-out) infinite;
+}
+
+.integration-wizard-logos[data-link="connected"] .integration-wizard-target {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--lumenbot-success) 30%, var(--lumenbot-transparent));
+}
+
+@keyframes integration-wizard-pulse {
+  0% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--lumenbot-accent) 45%, var(--lumenbot-transparent));
+  }
+  100% {
+    box-shadow: 0 0 0 8px var(--lumenbot-transparent);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .integration-wizard-link,
+  .integration-wizard-logos[data-link="connecting"] .integration-wizard-target {
+    animation: none;
+  }
+}
+
+.integration-wizard-body {
+  display: grid;
+  gap: var(--lumenbot-space-3);
+}
+
+.integration-wizard-foot {
+  display: flex;
+  gap: var(--lumenbot-space-2);
+  justify-content: flex-end;
+}
+
+/* CopyButton draws its icon at full size; match the 14px icons of the other footer buttons. */
+.integration-wizard-foot .ui-button > svg {
+  width: var(--lumenbot-icon-sm);
+  height: var(--lumenbot-icon-sm);
+}
+
+/* Above the settings window the flow opens from. */
+.integration-dialog-backdrop {
+  z-index: calc(var(--lumenbot-layer-dialog) + 1);
+}
+
+.integration-wizard-dialog {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: calc(var(--lumenbot-layer-dialog) + 1);
+  width: min(440px, calc(100vw - var(--lumenbot-space-6) * 2));
+  max-height: calc(100dvh - var(--lumenbot-space-6) * 2);
+  overflow-y: auto;
+  outline: 0;
+  transform: translate(-50%, -50%);
+}
+
+.integration-wizard-dialog h2 {
+  margin: 0;
+}
+
+.integration-dialog-close {
+  position: absolute;
+  top: var(--lumenbot-space-3);
+  right: var(--lumenbot-space-3);
+}
+
+/* ------------------------------------------------ stepper */
+
+.integration-stepper {
+  display: flex;
+  align-items: center;
+  margin: 0 0 var(--lumenbot-space-2);
+  padding: 0;
+  list-style: none;
+}
+
+.integration-step {
+  display: flex;
+  align-items: center;
+  color: var(--lumenbot-text-muted);
+  font-size: var(--lumenbot-text-sm);
+}
+
+/* The line to a step: quiet until the flow reaches that step, then it fills from the left. */
+.integration-step + .integration-step::before {
+  display: block;
+  width: 24px;
+  height: 2px;
+  margin-inline: var(--lumenbot-space-1);
+  border-radius: var(--lumenbot-radius-pill);
+  background:
+    linear-gradient(to right, var(--lumenbot-success), var(--lumenbot-accent)) no-repeat,
+    var(--lumenbot-border-strong);
+  background-size:
+    0% 100%,
+    auto;
+  content: "";
+}
+
+.integration-step + .integration-step[data-state="current"]::before {
+  background-size:
+    100% 100%,
+    auto;
+  animation: integration-step-fill 0.4s var(--lumenbot-ease-out);
+}
+
+.integration-step + .integration-step[data-state="done"]::before {
+  background:
+    linear-gradient(var(--lumenbot-success), var(--lumenbot-success)) no-repeat,
+    var(--lumenbot-border-strong);
+  background-size:
+    100% 100%,
+    auto;
+  animation: integration-step-fill 0.4s var(--lumenbot-ease-out);
+}
+
+@keyframes integration-step-fill {
+  from {
+    background-size:
+      0% 100%,
+      auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .integration-step + .integration-step[data-state="current"]::before,
+  .integration-step + .integration-step[data-state="done"]::before {
+    animation: none;
+  }
+}
+
+.integration-step-index {
+  display: inline-grid;
+  box-sizing: border-box;
+  width: 20px;
+  height: 20px;
+  place-items: center;
+  border: 1px solid var(--lumenbot-border-strong);
+  border-radius: var(--lumenbot-radius-pill);
+  font-size: var(--lumenbot-text-sm);
+  font-variant-numeric: tabular-nums;
+  font-weight: var(--lumenbot-weight-medium);
+  line-height: 1;
+}
+
+.integration-step[data-state="current"] {
+  color: var(--lumenbot-text-primary);
+}
+
+.integration-step[data-state="current"] .integration-step-index {
+  border-color: var(--lumenbot-accent);
+  background: var(--lumenbot-accent);
+  color: var(--lumenbot-text-on-accent);
+}
+
+.integration-step[data-state="done"] .integration-step-index {
+  border-color: var(--lumenbot-success);
+  color: var(--lumenbot-success);
+}
+
+/* ------------------------------------------------ Connectors list */
+
+.integrations-hub {
+  display: grid;
+  gap: var(--lumenbot-space-6);
+}
+
+/* The whole row opens the integration, as on Marketplace cards. Buttons in the row stay on top. */
+.integrations-hub-row {
+  position: relative;
+  border-radius: var(--lumenbot-radius-md);
+  transition: background-color var(--lumenbot-duration-hover) var(--lumenbot-ease-out);
+}
+
+.integrations-hub-row:has(> .integrations-hub-hitarea:hover) {
+  background: var(--lumenbot-hover);
+}
+
+.integrations-hub-hitarea {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  width: auto;
+  height: auto;
+  padding: 0;
+  border: 0;
+  border-radius: inherit;
+  background: var(--lumenbot-transparent);
+  cursor: pointer;
+  transition: none;
+}
+
+.integrations-hub-hitarea:hover:not(:disabled):not([data-disabled]) {
+  background: var(--lumenbot-transparent);
+}
+
+.integrations-hub-hitarea:focus-visible {
+  outline: 2px solid var(--lumenbot-border-focus);
+  outline-offset: -2px;
+}
+
+.integrations-hub-actions {
+  gap: var(--lumenbot-space-3);
+}
+
+.integrations-hub-actions .ui-button {
+  position: relative;
+  z-index: 2;
+}
+
+.integrations-hub-chevron {
+  width: var(--lumenbot-icon-sm);
+  height: var(--lumenbot-icon-sm);
+  margin: 0 var(--lumenbot-space-1-5);
+  color: var(--lumenbot-text-muted);
+}
+
+.integrations-hub-title {
+  display: inline-flex;
+  gap: var(--lumenbot-space-2);
+  align-items: center;
+}
+
+.integrations-hub-summary[data-status="attention"] {
+  color: var(--lumenbot-warning-text);
+}
+
+.integrations-face-stack {
+  display: inline-flex;
+  gap: var(--lumenbot-space-0-5);
+  align-items: center;
+}
+
+.integrations-face-more {
+  display: inline-grid;
+  min-width: 24px;
+  height: 24px;
+  padding: 0 var(--lumenbot-space-1);
+  place-items: center;
+  border-radius: var(--lumenbot-radius-pill);
+  background: var(--lumenbot-bg-control);
+  color: var(--lumenbot-text-secondary);
+  font-size: var(--lumenbot-text-sm);
+}
+
+.integrations-agent-face {
+  --integrations-agent-face-size: 32px;
+  display: inline-block;
+  flex: none;
+  width: var(--integrations-agent-face-size);
+  height: var(--integrations-agent-face-size);
+}
+
+.integrations-agent-face[data-size="sm"] {
+  --integrations-agent-face-size: 24px;
+}
+
+/* An agent avatar stands low in its box. Lift it to the middle, as the marketplace avatar does. */
+.integrations-agent-face > * {
+  --agent-avatar-optical-offset: calc(var(--integrations-agent-face-size) * -0.14);
+  width: 100%;
+  height: 100%;
+}

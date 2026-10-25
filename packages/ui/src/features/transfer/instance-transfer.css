@@ -1,0 +1,152 @@
+﻿/* Settings > Transfer. Rows, messages and steps reuse the Storage page and the agent import
+   (features/files/files.css, features/import/agent-import.css), so the screens read as one set. */
+
+.instance-transfer {
+  display: flex;
+  max-width: 720px;
+  flex-direction: column;
+  gap: var(--lumenbot-space-4);
+}
+
+.instance-transfer-start {
+  justify-content: flex-start;
+}
+
+.instance-transfer-back {
+  align-self: flex-start;
+  padding-inline: 0;
+}
+
+.instance-transfer-link {
+  align-self: flex-start;
+  padding-inline: 0;
+}
+
+.instance-transfer-chip {
+  padding: 0 var(--lumenbot-space-1-5);
+  border: 1px solid var(--lumenbot-border-grouped);
+  border-radius: var(--lumenbot-radius-pill);
+  color: var(--lumenbot-text-muted);
+  font-size: var(--lumenbot-text-sm);
+  white-space: nowrap;
+}
+
+/* Old computer → file → new computer, as one line. */
+.instance-transfer-flow {
+  display: flex;
+  align-items: center;
+  gap: var(--lumenbot-space-3);
+  margin: 0;
+  padding: var(--lumenbot-space-3) var(--lumenbot-space-4);
+  border: 1px solid var(--lumenbot-border-grouped);
+  border-radius: var(--lumenbot-radius-lg);
+  list-style: none;
+}
+
+.instance-transfer-flow-item {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--lumenbot-space-1-5);
+  color: var(--lumenbot-text-secondary);
+  font-size: var(--lumenbot-text-sm);
+  text-align: center;
+}
+
+.instance-transfer-flow-icon {
+  width: var(--lumenbot-icon-md);
+  height: var(--lumenbot-icon-md);
+  color: var(--lumenbot-text-primary);
+}
+
+.instance-transfer-flow-arrow {
+  width: var(--lumenbot-icon-sm);
+  height: var(--lumenbot-icon-sm);
+  flex: none;
+  color: var(--lumenbot-text-muted);
+}
+
+.instance-transfer-tiles {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--lumenbot-space-3);
+}
+
+.instance-transfer-tile {
+  display: flex;
+  height: auto;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--lumenbot-space-1);
+  padding: var(--lumenbot-space-4);
+  text-align: left;
+  white-space: normal;
+}
+
+.instance-transfer-tile-icon {
+  width: var(--lumenbot-icon-md);
+  height: var(--lumenbot-icon-md);
+  margin-bottom: var(--lumenbot-space-2);
+}
+
+.instance-transfer-tile-title {
+  color: var(--lumenbot-text-primary);
+  font-size: var(--lumenbot-text-md);
+  font-weight: var(--lumenbot-weight-medium);
+}
+
+.instance-transfer-tile-text {
+  color: var(--lumenbot-text-muted);
+  font-size: var(--lumenbot-text-sm);
+  font-weight: var(--lumenbot-weight-regular);
+}
+
+/* What moves, as counts with icons. */
+.instance-transfer-summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--lumenbot-space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.instance-transfer-summary-item {
+  display: flex;
+  align-items: center;
+  gap: var(--lumenbot-space-2);
+  color: var(--lumenbot-text-primary);
+  font-size: var(--lumenbot-text-md);
+}
+
+.instance-transfer-summary-icon {
+  width: var(--lumenbot-icon-sm);
+  height: var(--lumenbot-icon-sm);
+  flex: none;
+  color: var(--lumenbot-text-muted);
+}
+
+.instance-transfer-not-moved {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--lumenbot-space-2);
+  margin: 0;
+  color: var(--lumenbot-text-muted);
+  font-size: var(--lumenbot-text-sm);
+  line-height: 1.45;
+}
+
+.instance-transfer-not-moved-icon {
+  width: var(--lumenbot-icon-xs);
+  height: var(--lumenbot-icon-xs);
+  flex: none;
+  margin-top: 2px;
+}
+
+@media (max-width: 640px) {
+  .instance-transfer-tiles,
+  .instance-transfer-summary {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

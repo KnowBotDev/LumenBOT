@@ -1,0 +1,205 @@
+﻿.github-connector {
+  display: grid;
+  gap: var(--lumenbot-space-6);
+}
+
+/* UserAvatar has no style of its own: the initials, or GitHub's picture when the account has one. */
+.github-connector-avatar {
+  display: inline-grid;
+  flex: none;
+  width: 32px;
+  height: 32px;
+  place-items: center;
+  overflow: hidden;
+  border-radius: var(--lumenbot-radius-pill);
+  background: linear-gradient(135deg, var(--lumenbot-accent-strong), var(--lumenbot-onboarding-desktop-indigo));
+  color: var(--lumenbot-text-primary);
+  font-size: var(--lumenbot-text-sm);
+  font-weight: var(--lumenbot-weight-semibold);
+}
+
+.github-connector-avatar > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.github-connector-line {
+  padding: var(--lumenbot-space-3) var(--lumenbot-space-4);
+}
+
+/* On the card fill, the danger tone needs its text step for contrast. */
+.github-connector-line[data-tone="danger"] {
+  color: var(--lumenbot-danger-text);
+}
+
+.github-connector-search {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: var(--lumenbot-space-3) var(--lumenbot-space-4) var(--lumenbot-space-2);
+}
+
+.github-connector-search > svg {
+  position: absolute;
+  left: calc(var(--lumenbot-space-4) + var(--lumenbot-space-3));
+  width: var(--lumenbot-icon-sm);
+  height: var(--lumenbot-icon-sm);
+  color: var(--lumenbot-text-muted);
+  pointer-events: none;
+}
+
+.github-connector-search input {
+  width: 100%;
+  padding-left: calc(var(--lumenbot-space-3) * 2 + var(--lumenbot-icon-sm));
+}
+
+/* A long list scrolls inside the card, so Disconnect stays near the top of the tab. */
+.github-connector-repository-list {
+  display: grid;
+  max-height: 260px;
+  margin: 0;
+  padding: 0 var(--lumenbot-space-2) var(--lumenbot-space-2);
+  overflow-y: auto;
+  list-style: none;
+}
+
+.github-connector-repository {
+  display: flex;
+  gap: var(--lumenbot-space-2);
+  align-items: center;
+  justify-content: space-between;
+  /* The same height with and without the Private badge. */
+  min-height: 36px;
+  padding: 0 var(--lumenbot-space-2);
+  border-radius: var(--lumenbot-radius-md);
+  transition: background-color var(--lumenbot-duration-fast) var(--lumenbot-ease-out);
+}
+
+.github-connector-repository:hover {
+  background: var(--lumenbot-hover);
+}
+
+.github-connector-repository-name {
+  min-width: 0;
+}
+
+.github-connector-repository-owner {
+  color: var(--lumenbot-text-muted);
+}
+
+.github-connector-private {
+  flex: none;
+  gap: var(--lumenbot-space-1);
+}
+
+/* ------------------------------------------------ connect dialog */
+
+.github-connector-center {
+  display: grid;
+  min-height: 96px;
+  place-items: center;
+}
+
+/* The code is about to be typed on another screen, so each character has its own tile. */
+.github-connector-code {
+  display: flex;
+  gap: var(--lumenbot-space-1-5);
+  justify-content: center;
+}
+
+.github-connector-code-char {
+  display: inline-grid;
+  width: 36px;
+  height: 48px;
+  place-items: center;
+  border: 1px solid var(--lumenbot-border);
+  border-radius: var(--lumenbot-radius-md);
+  background: var(--lumenbot-bg-surface);
+  font-family: var(--lumenbot-font-mono);
+  font-size: var(--lumenbot-text-xl);
+  font-weight: var(--lumenbot-weight-semibold);
+}
+
+.github-connector-code-char[data-separator="true"] {
+  width: 12px;
+  border-color: var(--lumenbot-transparent);
+  background: var(--lumenbot-transparent);
+  color: var(--lumenbot-text-muted);
+}
+
+.github-connector-waiting {
+  display: flex;
+  gap: var(--lumenbot-space-2);
+  align-items: center;
+  justify-content: center;
+}
+
+.github-connector-done {
+  display: flex;
+  gap: var(--lumenbot-space-3);
+  align-items: center;
+  padding: var(--lumenbot-space-3) var(--lumenbot-space-4);
+  border-radius: var(--lumenbot-radius-lg);
+  background: var(--lumenbot-success-wash);
+}
+
+.github-connector-done > div {
+  display: grid;
+  flex: 1;
+}
+
+/* ------------------------------------------------ disconnect dialog */
+
+.github-connector-effects {
+  display: grid;
+  margin: 0;
+  padding: var(--lumenbot-space-1);
+  border-radius: var(--lumenbot-radius-lg);
+  background: var(--lumenbot-bg-surface);
+  list-style: none;
+  color: var(--lumenbot-text-secondary);
+  font-size: var(--lumenbot-text-sm);
+}
+
+.github-connector-effects li {
+  display: flex;
+  gap: var(--lumenbot-space-3);
+  align-items: center;
+  padding: var(--lumenbot-space-2);
+}
+
+.github-connector-effects li + li {
+  border-top: 1px solid var(--lumenbot-border);
+}
+
+.github-connector-effect-icon {
+  display: inline-grid;
+  flex: none;
+  width: 28px;
+  height: 28px;
+  place-items: center;
+  border-radius: var(--lumenbot-radius-md);
+  background: var(--lumenbot-bg-surface-raised);
+  color: var(--lumenbot-text-muted);
+}
+
+.github-connector-effect-icon > svg {
+  width: var(--lumenbot-icon-sm);
+  height: var(--lumenbot-icon-sm);
+}
+
+.github-connector-effects li[data-tone="danger"] .github-connector-effect-icon {
+  background: var(--lumenbot-danger-soft);
+  color: var(--lumenbot-danger-text);
+}
+
+.github-connector-effects li[data-tone="success"] .github-connector-effect-icon {
+  background: var(--lumenbot-success-soft);
+  color: var(--lumenbot-success);
+}
+
+/* The label on the soft danger fill reads the text step, as the shared confirmation does for contrast. */
+.github-connector-confirm.ui-button-variant-destructive {
+  color: var(--lumenbot-danger-text);
+}

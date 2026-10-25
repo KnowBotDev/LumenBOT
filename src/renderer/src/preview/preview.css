@@ -1,0 +1,91 @@
+@import "../styles.css";
+@source "../";
+
+.lumenbot-playground-root {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--lumenbot-bg-canvas);
+}
+
+.lumenbot-playground-loading {
+  width: 100%;
+  height: 100%;
+  background: var(--lumenbot-bg-canvas);
+}
+
+.lumenbot-playground-root .unread-messages-banner {
+  display: none;
+}
+
+@media (max-width: 640px) {
+  .lumenbot-playground-root .app-frame,
+  .lumenbot-playground-root .app-frame-with-server-rail {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: 68px minmax(0, 1fr);
+  }
+
+  .lumenbot-playground-root .server-rail,
+  .lumenbot-playground-root .left-panel-resizer,
+  .lumenbot-playground-root .sidebar-topbar,
+  .lumenbot-playground-root .sidebar-search-wrap,
+  .lumenbot-playground-root .sidebar-list-context-trigger,
+  .lumenbot-playground-root .sidebar-chat-group > header {
+    display: none;
+  }
+
+  .lumenbot-playground-root .sidebar {
+    grid-column: 1;
+    grid-row: 1;
+    flex-direction: row;
+    border-right: 0;
+    border-bottom: 1px solid var(--lumenbot-border);
+  }
+
+  .lumenbot-playground-root .agent-list,
+  .lumenbot-playground-root .sidebar-compact .agent-list {
+    display: flex;
+    overflow-x: auto;
+    overflow-y: hidden;
+    align-items: center;
+    justify-content: center;
+    gap: var(--lumenbot-space-1-5);
+    padding: var(--lumenbot-space-2) var(--lumenbot-space-3);
+  }
+
+  /* Every wrapper between the list and the rows becomes one row of avatars. */
+  .lumenbot-playground-root .agent-list-content,
+  .lumenbot-playground-root .sidebar-chat-group,
+  .lumenbot-playground-root .sidebar-section-collapse,
+  .lumenbot-playground-root .sidebar-section-body {
+    display: flex;
+    align-items: center;
+    gap: var(--lumenbot-space-1-5);
+    margin: 0;
+  }
+
+  .lumenbot-playground-root .agent-row,
+  .lumenbot-playground-root .sidebar-compact .agent-row {
+    width: 48px;
+    height: 48px;
+    flex: 0 0 48px;
+    margin: 0;
+    padding: 6px;
+  }
+
+  .lumenbot-playground-root .sidebar-compact .agent-row-avatar {
+    transform: none;
+  }
+
+  .lumenbot-playground-root .agent-row-copy {
+    display: none;
+  }
+
+  /* The chat is inside the panes wrapper, which the frame puts in the first row. */
+  .lumenbot-playground-root .app-frame-panes,
+  .lumenbot-playground-root .conversation-panel,
+  .lumenbot-playground-root .app-frame-with-server-rail .conversation-panel {
+    grid-column: 1;
+    grid-row: 2;
+  }
+}

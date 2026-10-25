@@ -1,0 +1,156 @@
+﻿/* Server settings > Connectors > Slack. */
+
+.slack-integration {
+  display: grid;
+  gap: var(--lumenbot-space-6);
+}
+
+.slack-integration-note {
+  margin-top: var(--lumenbot-space-2);
+}
+
+.slack-integration-stack {
+  display: grid;
+  gap: var(--lumenbot-space-0-5);
+  justify-items: start;
+}
+
+/* ------------------------------------------------ remove dialog */
+
+.slack-effects {
+  display: grid;
+  margin: 0;
+  padding: var(--lumenbot-space-1);
+  border-radius: var(--lumenbot-radius-lg);
+  background: var(--lumenbot-bg-surface);
+  list-style: none;
+  color: var(--lumenbot-text-secondary);
+  font-size: var(--lumenbot-text-sm);
+}
+
+.slack-effects li {
+  display: flex;
+  gap: var(--lumenbot-space-3);
+  align-items: center;
+  padding: var(--lumenbot-space-2);
+}
+
+.slack-effects li + li {
+  border-top: 1px solid var(--lumenbot-border);
+}
+
+.slack-effect-icon {
+  display: inline-grid;
+  flex: none;
+  width: 28px;
+  height: 28px;
+  place-items: center;
+  border-radius: var(--lumenbot-radius-md);
+  background: var(--lumenbot-bg-surface-raised);
+  color: var(--lumenbot-text-muted);
+}
+
+.slack-effect-icon > svg {
+  width: var(--lumenbot-icon-sm);
+  height: var(--lumenbot-icon-sm);
+}
+
+.slack-effects li[data-tone="danger"] .slack-effect-icon {
+  background: var(--lumenbot-danger-soft);
+  color: var(--lumenbot-danger-text);
+}
+
+.slack-effects li[data-tone="success"] .slack-effect-icon {
+  background: var(--lumenbot-success-soft);
+  color: var(--lumenbot-success);
+}
+
+/* ------------------------------------------------ connect dialog */
+
+.slack-checklist {
+  display: grid;
+  gap: var(--lumenbot-space-2);
+  margin: 0;
+  padding: var(--lumenbot-space-3) var(--lumenbot-space-4);
+  border-radius: var(--lumenbot-radius-lg);
+  background: var(--lumenbot-bg-surface);
+  list-style: none;
+  font-size: var(--lumenbot-text-sm);
+}
+
+.slack-checklist li {
+  display: flex;
+  gap: var(--lumenbot-space-2);
+  align-items: center;
+}
+
+.slack-checklist li[data-state="done"] {
+  color: var(--lumenbot-text-secondary);
+}
+
+.slack-checklist li[data-state="done"] svg {
+  color: var(--lumenbot-success);
+}
+
+.slack-checklist-dot {
+  width: 14px;
+  height: 14px;
+  border: 1px solid var(--lumenbot-border-strong);
+  border-radius: var(--lumenbot-radius-pill);
+}
+
+.slack-waiting {
+  display: flex;
+  gap: var(--lumenbot-space-2);
+  align-items: center;
+  justify-content: center;
+}
+
+.slack-orchestrator-card {
+  display: flex;
+  gap: var(--lumenbot-space-3);
+  align-items: center;
+  padding: var(--lumenbot-space-3);
+  border: 1px solid var(--lumenbot-border);
+  border-radius: var(--lumenbot-radius-lg);
+  background: var(--lumenbot-bg-surface);
+}
+
+.slack-orchestrator-model {
+  display: grid;
+  gap: var(--lumenbot-space-1);
+}
+
+/* ------------------------------------------------ Discord roles dialog */
+
+.slack-roles {
+  display: grid;
+  max-height: 40vh;
+  margin: 0;
+  padding: var(--lumenbot-space-1);
+  overflow-y: auto;
+  border: 1px solid var(--lumenbot-border);
+  border-radius: var(--lumenbot-radius-lg);
+  background: var(--lumenbot-bg-surface);
+  list-style: none;
+}
+
+.slack-role-row {
+  display: flex;
+  gap: var(--lumenbot-space-2);
+  align-items: center;
+  padding: var(--lumenbot-space-1) var(--lumenbot-space-2);
+  border-radius: var(--lumenbot-radius-sm);
+  cursor: pointer;
+}
+
+.slack-role-row:hover {
+  background: var(--lumenbot-bg-control-hover);
+}
+
+.slack-role-name {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

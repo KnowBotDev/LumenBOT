@@ -1,0 +1,153 @@
+﻿/*
+ * The light palette of the desktop app and the web client. tokens.css declares every
+ * token, dark; this file changes only the colors that must change, when the root element
+ * has data-lumenbot-color-scheme="light". Each desktop window and the web client set that
+ * attribute from the saved choice, and resolve System from prefers-color-scheme. The public
+ * site never sets it, so it stays dark.
+ *
+ * The rules of the dark palette stay true here, turned over: a raised surface is lighter
+ * than the canvas, and a hover or a border is a translucent ink. In the dark palette that
+ * ink is white; here it is the primary text color, #141414.
+ *
+ * Not here, on purpose:
+ * - The native-only tokens (bg-native-canvas, chrome-*): mobile has its own light theme in
+ *   tokens-native.css. The desktop uses the native sidebar, sheet and grouped tokens, so they are here.
+ * - The landing-page materials (price-*, hero-grid, download-card-*): the public site is dark only.
+ * - The paper-* tokens: they stay on paper that is always light, such as a QR code.
+ * - Illustration and brand colors (logo-*, onboarding-*, sound-*, provider logos): a drawing
+ *   keeps its colors in both themes.
+ * - The Dynamic Island: it imitates the camera housing, so its window never sets the attribute.
+ */
+
+:root[data-lumenbot-color-scheme="light"] {
+  color-scheme: light;
+
+  --lumenbot-bg-canvas: #f5f5f6;
+  --lumenbot-bg-canvas-clear: rgba(245, 245, 246, 0);
+  --lumenbot-bg-frame: #e8e8eb;
+  --lumenbot-bg-sidebar: #f5f5f6;
+  --lumenbot-bg-native-sidebar: #f5f5f6;
+  --lumenbot-bg-sheet: #ffffff;
+  --lumenbot-bg-sheet-inset: #f0f0f2;
+  --lumenbot-bg-grouped: #ffffff;
+  --lumenbot-text-grouped-secondary: #6b6b70;
+  --lumenbot-border-grouped: #e3e3e6;
+  --lumenbot-marketplace-detail-bg: #ececee;
+  --lumenbot-bg-surface: #ffffff;
+  --lumenbot-bg-surface-raised: #fcfcfc;
+  --lumenbot-bg-control: #ffffff;
+  --lumenbot-bg-control-hover: #f0f0f2;
+  --lumenbot-bg-control-active: #e8e8eb;
+  --lumenbot-tabs-bar-bg: #ececee;
+  --lumenbot-tabs-pill-bg: #ffffff;
+  --lumenbot-bg-overlay: rgba(245, 245, 246, 0.92);
+  --lumenbot-dialog-overlay: rgba(20, 20, 20, 0.12);
+  --lumenbot-dialog-ring: rgba(20, 20, 20, 0.1);
+  --lumenbot-bg-glass: rgba(255, 255, 255, 0.76);
+  --lumenbot-glass-surface: rgba(20, 20, 20, 0.04);
+  --lumenbot-glass-surface-hover: rgba(20, 20, 20, 0.07);
+  --lumenbot-glass-border: rgba(20, 20, 20, 0.12);
+  --lumenbot-glass-highlight: rgba(255, 255, 255, 0.6);
+  --lumenbot-glass-shadow: transparent;
+  --lumenbot-scroll-edge-overlay: rgba(245, 245, 246, 0.72);
+
+  --lumenbot-border: rgba(20, 20, 20, 0.07);
+  --lumenbot-border-strong: rgba(20, 20, 20, 0.1);
+  --lumenbot-image-outline: rgba(20, 20, 20, 0.1);
+  --lumenbot-hover: rgba(20, 20, 20, 0.05);
+
+  /* Contrast on the canvas: primary 17:1, secondary 10:1, muted 4.9:1. Dim is for
+     marks and disabled text, as in the dark palette. */
+  --lumenbot-text-primary: #141414;
+  --lumenbot-text-secondary: #3a3a3c;
+  --lumenbot-text-muted: #6b6b70;
+  --lumenbot-text-dim: #8e8e93;
+  --lumenbot-text-placeholder: #5c5c61;
+  --lumenbot-text-readable: rgba(20, 20, 20, 0.6);
+  --lumenbot-settings-text-muted: rgba(20, 20, 20, 0.6);
+
+  /* The on-light family is the high-contrast inverted element: the default button, a checked
+     switch, the user's bubble, the light tooltip. On a light canvas it turns dark. */
+  --lumenbot-surface-light: #1c1c1e;
+  --lumenbot-text-on-light: #ffffff;
+  --lumenbot-text-muted-on-light: rgba(255, 255, 255, 0.64);
+  --lumenbot-text-dim-on-light: rgba(255, 255, 255, 0.4);
+  --lumenbot-border-on-light: rgba(255, 255, 255, 0.16);
+
+  /* The same hue 210 as the dark accent. The fill keeps its value, so a button looks the same
+     in both themes; text and hover go darker for contrast (accent-text 5.3:1 on the canvas). */
+  --lumenbot-accent-hover: #006ad4;
+  --lumenbot-accent-text: #0064c8;
+  --lumenbot-accent-soft: rgba(0, 124, 247, 0.12);
+  --lumenbot-accent-strong: rgba(0, 124, 247, 0.26);
+
+  /* Chart series: darker steps of the dark-palette hues, so each series reads on white.
+     Not yet checked with the dataviz palette validator in light mode. */
+  --lumenbot-chart-series-codex: #8e4fc0;
+  --lumenbot-chart-series-grok: #16849b;
+  --lumenbot-chart-storage-workspaces: #2f74c9;
+  --lumenbot-chart-storage-files: #c64d1d;
+  --lumenbot-chart-storage-chats: #148a61;
+  --lumenbot-chart-storage-downloads: #6f62d6;
+  --lumenbot-chart-storage-runtimes: #a86f00;
+
+  /* Status fills keep their hue. Status text is darker, for AA on white. */
+  --lumenbot-success: #1fa85a;
+  --lumenbot-success-text: #187a41;
+  --lumenbot-success-soft: rgba(31, 168, 90, 0.12);
+  --lumenbot-success-wash: rgba(31, 168, 90, 0.06);
+  --lumenbot-warning: #f08a00;
+  --lumenbot-warning-text: #9c5200;
+  --lumenbot-warning-soft: rgba(240, 138, 0, 0.14);
+  --lumenbot-approval-badge-soft: rgba(240, 138, 0, 0.18);
+  --lumenbot-danger: #e8222d;
+  --lumenbot-danger-hover: #f04a53;
+  --lumenbot-danger-text: #c0141d;
+  --lumenbot-danger-soft: rgba(232, 34, 45, 0.12);
+  --lumenbot-danger-soft-hover: rgba(232, 34, 45, 0.2);
+  --lumenbot-danger-focus: rgba(232, 34, 45, 0.36);
+  --lumenbot-danger-border: rgba(232, 34, 45, 0.45);
+
+  --lumenbot-question-option: #16849b;
+  --lumenbot-question-option-soft: rgba(22, 132, 155, 0.12);
+  --lumenbot-question-option-hover: rgba(22, 132, 155, 0.18);
+  --lumenbot-question-option-pressed: rgba(22, 132, 155, 0.24);
+  --lumenbot-question-badge-text: #0f6a7d;
+  --lumenbot-question-badge-soft: rgba(22, 132, 155, 0.14);
+  --lumenbot-message-badge-text: #0a5fb8;
+  --lumenbot-message-badge-soft: rgba(0, 124, 247, 0.12);
+  --lumenbot-badge-new: #e0004a;
+  --lumenbot-badge-new-soft: rgba(224, 0, 74, 0.12);
+
+  /* File references: the hues of the dark palette, darker so the name reads on white. */
+  --lumenbot-file-blue: #1a66c4;
+  --lumenbot-file-blue-soft: rgba(31, 111, 209, 0.12);
+  --lumenbot-file-yellow: #9c5200;
+  --lumenbot-file-yellow-soft: rgba(240, 138, 0, 0.14);
+  --lumenbot-file-orange: #a8521a;
+  --lumenbot-file-orange-soft: rgba(181, 90, 31, 0.12);
+  --lumenbot-file-teal: #127589;
+  --lumenbot-file-teal-soft: rgba(22, 132, 155, 0.12);
+  --lumenbot-file-green: #187a41;
+  --lumenbot-file-green-soft: rgba(31, 168, 90, 0.12);
+  --lumenbot-file-red: #c0141d;
+  --lumenbot-file-red-soft: rgba(232, 34, 45, 0.12);
+  --lumenbot-file-pink: #a3478f;
+  --lumenbot-file-pink-soft: rgba(163, 71, 143, 0.12);
+  --lumenbot-file-default: #0064c8;
+  --lumenbot-file-default-soft: rgba(0, 124, 247, 0.12);
+
+  --lumenbot-data-table-border: #e3e3e6;
+  --lumenbot-data-table-header-text: #6b6b70;
+  --lumenbot-data-table-text: #1c1c1e;
+  --lumenbot-data-table-outer-border: rgba(20, 20, 20, 0);
+  --lumenbot-data-table-ring: rgba(20, 20, 20, 0.1);
+
+  /* No drop shadows: on the dark canvas they do not show, but on white they read as a halo.
+     A raised surface keeps its 1px ring. */
+  --lumenbot-shadow-popover-ambient: transparent;
+  --lumenbot-shadow-dialog: transparent;
+  --lumenbot-shadow-menu: transparent;
+  --lumenbot-shadow-ring: rgba(20, 20, 20, 0.04);
+  --lumenbot-shadow-overlay: 0 0 0 transparent;
+}
