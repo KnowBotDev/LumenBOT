@@ -1,11 +1,11 @@
-{
+﻿{
   "name": "lumenbot",
   "productName": "LumenBOT",
   "desktopName": "lumenbot.desktop",
   "version": "0.49.0",
   "description": "A local-first multi-agent desktop workspace for Codex, Claude, and Grok.",
   "author": {
-    "name": "Norbert Bodziony",
+    "name": "EvolutionX",
     "url": "https://x.com/norbertbodziony"
   },
   "license": "PolyForm-Noncommercial-1.0.0",

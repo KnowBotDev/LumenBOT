@@ -1,9 +1,9 @@
-{
+﻿{
   "lockfileVersion": 1,
   "configVersion": 1,
   "workspaces": {
     "": {
-      "name": "openbot",
+      "name": "lumenbot",
       "dependencies": {
         "@1password/sdk": "0.5.0",
         "@agentclientprotocol/sdk": "1.4.0",

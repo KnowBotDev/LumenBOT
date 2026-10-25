@@ -8,7 +8,7 @@
 
 import { type ContentCollection, publishedFirst } from "./content-collection";
 
-export const NEWS_AUTHOR = "Norbert Bodziony";
+export const NEWS_AUTHOR = "EvolutionX";
 
 export const NEWS_COLLECTION: ContentCollection<"news"> = {
   id: "news",
