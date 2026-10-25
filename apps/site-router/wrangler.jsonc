@@ -1,0 +1,26 @@
+﻿{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "lumenbot-site-router",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-08-18",
+  "compatibility_flags": ["nodejs_compat"],
+  "workers_dev": false,
+  "preview_urls": false,
+  "routes": [
+    {
+      "pattern": "*.lumenbot.site/*",
+      "zone_name": "lumenbot.site"
+    }
+  ],
+  "vars": {
+    // The account service origin. The report route `/_lumenbot/report` and the links on error pages use it.
+    "ACCOUNT_ORIGIN": "https://openbot.run"
+  },
+  "r2_buckets": [
+    {
+      "binding": "SITES",
+      "bucket_name": "lumenbot-sites",
+      "preview_bucket_name": "lumenbot-sites-test"
+    }
+  ]
+}
