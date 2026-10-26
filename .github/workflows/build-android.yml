@@ -9,6 +9,7 @@ on:
       - "packages/**"
       - "package.json"
       - "bun.lock"
+      - ".github/workflows/build-android.yml"
 
 jobs:
   android:
@@ -30,12 +31,12 @@ jobs:
       - name: Generate native Android project
         working-directory: apps/mobile
         run: npx expo prebuild --platform android --no-install
-      - name: Build debug APK
+      - name: Build release APK
         working-directory: apps/mobile/android
-        run: ./gradlew assembleDebug --no-daemon
+        run: ./gradlew assembleRelease --no-daemon
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: lumenbot-android
-          path: apps/mobile/android/app/build/outputs/apk/debug/app-debug.apk
+          path: apps/mobile/android/app/build/outputs/apk/release/app-release.apk
           if-no-files-found: error
