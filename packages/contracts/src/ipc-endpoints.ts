@@ -71,6 +71,14 @@ import type {
   UpdateAgentMemoryInput,
 } from "./ipc-agent-memories";
 import type {
+  AgentEval,
+  AgentEvalRun,
+  DeleteAgentEvalInput,
+  ListAgentEvalRunsInput,
+  ListAgentEvalsInput,
+  SaveAgentEvalInput,
+} from "./ipc-agent-evals";
+import type {
   AgentProfileDraft,
   GenerateAgentProfileInput,
   SaveAgentProfileInput,
@@ -1324,6 +1332,12 @@ export const IPC_ENDPOINTS = {
     deleteMemory: scopedRequest<DeleteAgentMemoryInput, void>()("agent:delete-memory"),
     clearMemories: scopedRequest<string, void>()("agent:clear-memories"),
   },
+  agentEvals: {
+    listEvals: request<ListAgentEvalsInput, AgentEval[]>()("agent-evals:list"),
+    saveEval: request<SaveAgentEvalInput, AgentEval>()("agent-evals:save"),
+    deleteEval: request<DeleteAgentEvalInput, void>()("agent-evals:delete"),
+    listEvalRuns: request<ListAgentEvalRunsInput, AgentEvalRun[]>()("agent-evals:list-runs"),
+  },
   sharedTables: {
     // Shared tables are not scoped to an agent: there is no `agentId` on either call. The list is
     // every table in the one shared database, and the user's delete is not owner-gated.
@@ -1746,6 +1760,7 @@ export const IPC_GROUP_PATHS = {
   notifications: "notifications",
   agent: "agent",
   agentMemories: "agent",
+  agentEvals: "agentEvals",
   sharedTables: "agent",
   agentRoutines: "agent",
   channelMemories: "agent",

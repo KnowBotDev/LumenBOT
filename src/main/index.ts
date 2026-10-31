@@ -75,6 +75,7 @@ import { licenseIpcHandlers } from "./ipc/license-handlers";
 import { marketplaceAgentIpcHandlers } from "./ipc/marketplace-agent-handlers";
 import { mcpServerIpcHandlers } from "./ipc/mcp-server-handlers";
 import { memoryIpcHandlers } from "./ipc/memory-handlers";
+import { agentEvalsIpcHandlers } from "./ipc/agent-evals-handlers";
 import { messagingIpcHandlers } from "./ipc/messaging-handlers";
 import { notificationIpcHandlers } from "./ipc/notification-handlers";
 import { onePasswordConnectorIpcHandlers } from "./ipc/onepassword-connector-handlers";
@@ -537,6 +538,7 @@ function registerIpcHandlers({
   agentDefaults,
   agentMemoryLimit,
   agentAccess,
+  agentEvals,
   teamStore,
   serverTimezone,
   promptCacheTtl,
@@ -692,6 +694,7 @@ function registerIpcHandlers({
       takePendingPluginSlug: () => takePendingDeepLink("plugin"),
     }),
     ...memoryIpcHandlers({ service, remoteServers }),
+    ...agentEvalsIpcHandlers({ store: agentEvals }),
     ...sharedTableIpcHandlers({ service, remoteServers }),
     ...routineIpcHandlers({ service, remoteServers }),
     ...routineFlowIpcHandlers({ routineFlows, remoteServers }),

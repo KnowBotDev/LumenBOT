@@ -12,6 +12,8 @@ import {
 
 import {
   type AccountUsage,
+  type AgentEval,
+  type AgentEvalRun,
   type AgentMemory,
   type AgentMemorySelectionState,
   type AgentRuntimeSnapshot,
@@ -25,6 +27,8 @@ import {
   decodeProviderUsageResets,
   type HostProviderAccounts,
   isAccountUsage,
+  isAgentEval,
+  isAgentEvalRun,
   isAgentHostSettings,
   isAgentMemory,
   isAgentMemorySelectionState,
@@ -181,6 +185,21 @@ export function decodeAgents(value: unknown): ClientAgentSummary[] {
 
 export function decodeMemory(value: unknown): AgentMemory {
   if (!isAgentMemory(value)) throw new Error("Invalid agent memory response.");
+  return value;
+}
+
+export function decodeAgentEval(value: unknown): AgentEval {
+  if (!isAgentEval(value)) throw new Error("Invalid agent evaluation response.");
+  return value;
+}
+
+export function decodeAgentEvals(value: unknown): AgentEval[] {
+  if (!Array.isArray(value) || !value.every(isAgentEval)) throw new Error("Invalid agent evaluation list response.");
+  return value;
+}
+
+export function decodeAgentEvalRuns(value: unknown): AgentEvalRun[] {
+  if (!Array.isArray(value) || !value.every(isAgentEvalRun)) throw new Error("Invalid agent evaluation runs response.");
   return value;
 }
 

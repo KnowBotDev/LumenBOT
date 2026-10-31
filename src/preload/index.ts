@@ -83,6 +83,9 @@ import {
   decodeAgentStatusFromMain,
   decodeAgents,
   decodeAutomationRunCommand,
+  decodeAgentEval,
+  decodeAgentEvals,
+  decodeAgentEvalRuns,
   decodeDuplicateAgentResultFromMain,
   decodeHiddenAgentsFromMain,
   decodeHostAnalyticsFromMain,
@@ -1009,6 +1012,12 @@ const openbotApi: OpenBotDesktopApi = {
     install: decodeAgentInstallation,
     takePendingLink: decodePendingAgentTemplate,
     openLink: dropInvalid(decodePendingAgentTemplate),
+  }),
+  agentEvals: bridgeGroup(IPC_ENDPOINTS.agentEvals, {
+    listEvals: decodeAgentEvals,
+    saveEval: decodeAgentEval,
+    deleteEval: decodeVoid,
+    listEvalRuns: decodeAgentEvalRuns,
   }),
   agent: {
     ...agentGroup,

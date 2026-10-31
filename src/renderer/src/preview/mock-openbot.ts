@@ -1632,6 +1632,24 @@ export function createMockOpenBot(options: MockOpenBotOptions = {}): MockOpenBot
         return clone({ agent });
       },
     },
+    agentEvals: {
+      listEvals: async () => [],
+      saveEval: async (input) => {
+        const now = new Date().toISOString();
+        return {
+          id: input.id ?? crypto.randomUUID(),
+          agentId: input.agentId,
+          name: input.name,
+          prompt: input.prompt,
+          expectation: input.expectation,
+          active: input.active,
+          createdAt: now,
+          updatedAt: now,
+        };
+      },
+      deleteEval: async () => undefined,
+      listEvalRuns: async () => [],
+    },
     agent: {
       getStatus: async (serverId) =>
         clone(serverId === storyForeignServerId ? withStoryForeignProvider(agentStatus) : agentStatus),
