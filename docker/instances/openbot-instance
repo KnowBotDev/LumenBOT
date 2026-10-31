@@ -909,7 +909,7 @@ case $command in
     # login asks for the code in a terminal. Scripts and ssh without -t have none.
     terminal=()
     [ ! -t 0 ] || terminal=(--tty)
-    docker exec --interactive "${terminal[@]}" "openbot-$1" openbot "${@:2}"
+    docker exec --interactive "${terminal[@]}" "openbot-$1" lbot "${@:2}"
     ;;
   *)
     usage

@@ -119,11 +119,11 @@ then:
 
 ```sh
 aws ecs execute-command --cluster openbot --task <task ID> --container openbot \
-  --interactive --command "openbot login"
+  --interactive --command "lbot login"
 ```
 
-`openbot status`, `logout` and `name` work in the same way. The log is in the CloudWatch log group
-`/ecs/openbot`, not in `openbot logs`.
+`lbot status`, `logout` and `name` work in the same way. The log is in the CloudWatch log group
+`/ecs/openbot`, not in `lbot logs`.
 
 ## Network
 

@@ -33,7 +33,7 @@ LOCK=/run/openbot-update.lock
 SCRATCH=/var/tmp
 # The session of the lazy disk restore that boat runs after a resume.
 RESTORE=/var/lib/ascii-lazy
-HOSTED_FILES=(openbot-hosted-server openbot-hosted-env openbot-hosted-update openbot)
+HOSTED_FILES=(openbot-hosted-server openbot-hosted-env openbot-hosted-update lbot)
 # OpenBot asks for an update with an empty file in its runtime directory, which the service user
 # owns. The path unit starts the request service as root when a file is there.
 REQUESTS=/run/openbot
@@ -236,7 +236,9 @@ install_hosting() {
     openbot-update-request.path
   # The terminal command of a self-hosted server. A hosted server has no person at a terminal.
   if self_hosted; then
-    ln -sfn "$INSTALL/hosted/openbot" /usr/local/bin/openbot
+    ln -sfn "$INSTALL/hosted/lbot" /usr/local/bin/lbot
+    # A script or a note from an older release names it `openbot`. Keep one release of the old name.
+    ln -sfn "$INSTALL/hosted/lbot" /usr/local/bin/openbot
   fi
   install_pre_stop "$source" || echo "The boat pre-stop hook is not installed." >&2
 }

@@ -761,7 +761,7 @@ export const messages = {
   "mobile.server.update.path.hosted":
     "托管服务会在后台下载更新。已下载的更新会在服务器下次启动时生效。停止并恢复服务器前请先等待进行中的工作结束。如果版本一直停留在旧版，请联系主机管理员。",
   "mobile.server.update.path.system":
-    "在主机上运行 sudo openbot update 以安装最新版本。该命令会停止 LumenBOT，请先等待进行中的工作结束。自动下载的更新会在下次启动时安装。",
+    "在主机上运行 sudo lbot update 以安装最新版本。该命令会停止 LumenBOT，请先等待进行中的工作结束。自动下载的更新会在下次启动时安装。",
   "mobile.server.update.path.container":
     "在 Docker 主机上拉取新的 LumenBOT 镜像，并使用相同的数据卷重新创建容器。请先等待进行中的工作结束。保留原有数据卷，以免数据丢失。",
   "mobile.server.update.path.manual":

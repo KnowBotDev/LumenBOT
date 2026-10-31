@@ -839,7 +839,7 @@ export const messages = {
   "mobile.server.update.path.hosted":
     "Der gehostete Dienst lädt Updates im Hintergrund herunter. Ein heruntergeladenes Update startet beim nächsten Serverstart. Warte, bis aktive Aufgaben beendet sind, bevor du den Server stoppst und fortsetzt. Bleibt er bei einer alten Version, kontaktiere den Host-Administrator.",
   "mobile.server.update.path.system":
-    "Führe auf dem Host sudo openbot update aus, um die neueste Version zu installieren. Dieser Befehl beendet LumenBOT. Warte zuerst, bis aktive Aufgaben beendet sind. Automatische Downloads werden beim nächsten Systemstart installiert.",
+    "Führe auf dem Host sudo lbot update aus, um die neueste Version zu installieren. Dieser Befehl beendet LumenBOT. Warte zuerst, bis aktive Aufgaben beendet sind. Automatische Downloads werden beim nächsten Systemstart installiert.",
   "mobile.server.update.path.container":
     "Lade auf dem Docker-Host das neue LumenBOT-Image herunter und erstelle den Container mit denselben Datenvolumes neu. Warte zuerst, bis aktive Aufgaben beendet sind. Behalte die vorhandenen Volumes, um deine Daten zu erhalten.",
   "mobile.server.update.path.manual":

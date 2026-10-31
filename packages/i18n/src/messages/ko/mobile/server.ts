@@ -780,7 +780,7 @@ export const messages = {
   "mobile.server.update.path.hosted":
     "호스팅 서비스가 백그라운드에서 업데이트를 다운로드해요. 다운로드된 업데이트는 서버가 다음에 시작될 때 적용돼요. 서버를 중지했다가 재개하기 전에 진행 중인 작업이 끝나기를 기다리세요. 이전 버전에서 바뀌지 않으면 호스트 관리자에게 문의하세요.",
   "mobile.server.update.path.system":
-    "호스트에서 sudo openbot update를 실행해 최신 릴리스를 설치하세요. 이 명령은 LumenBOT을 중지해요. 먼저 진행 중인 작업이 끝나기를 기다리세요. 자동 다운로드는 다음 부팅 때 설치돼요.",
+    "호스트에서 sudo lbot update를 실행해 최신 릴리스를 설치하세요. 이 명령은 LumenBOT을 중지해요. 먼저 진행 중인 작업이 끝나기를 기다리세요. 자동 다운로드는 다음 부팅 때 설치돼요.",
   "mobile.server.update.path.container":
     "Docker 호스트에서 새 LumenBOT 이미지를 가져오고 같은 데이터 볼륨으로 컨테이너를 다시 만드세요. 먼저 진행 중인 작업이 끝나기를 기다리세요. 데이터를 보존하려면 기존 볼륨을 유지하세요.",
   "mobile.server.update.path.manual":

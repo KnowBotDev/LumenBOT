@@ -821,7 +821,7 @@ export const messages = {
   "mobile.server.update.path.hosted":
     "O serviço hospedado baixa atualizações em segundo plano. Uma atualização baixada inicia na próxima inicialização do servidor. Aguarde o trabalho ativo terminar antes de parar e retomar o servidor. Se ele continuar em uma versão antiga, contate o administrador do computador anfitrião.",
   "mobile.server.update.path.system":
-    "No computador anfitrião, execute sudo openbot update para instalar a versão mais recente. Este comando interrompe o LumenBOT. Aguarde o trabalho ativo terminar primeiro. Downloads automáticos são instalados na próxima inicialização.",
+    "No computador anfitrião, execute sudo lbot update para instalar a versão mais recente. Este comando interrompe o LumenBOT. Aguarde o trabalho ativo terminar primeiro. Downloads automáticos são instalados na próxima inicialização.",
   "mobile.server.update.path.container":
     "No computador anfitrião do Docker, baixe a nova imagem do LumenBOT e crie o contêiner de novo com os mesmos volumes de dados. Aguarde o trabalho ativo terminar primeiro. Mantenha os volumes existentes para preservar seus dados.",
   "mobile.server.update.path.manual":

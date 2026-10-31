@@ -1,7 +1,7 @@
 #!/bin/bash
 # The terminal command of a self-hosted server. openbot-server-setup links it to
-# /usr/local/bin/openbot. It talks to the running OpenBot over the control socket in
-# src/main/server-mode.ts, and to systemd for the service.
+# /usr/local/bin/lbot. A compatibility link at /usr/local/bin/openbot also runs it. It talks to the
+# running OpenBot over the control socket in src/main/server-mode.ts, and to systemd for the service.
 #
 # The socket is in /run/openbot, which only the service user can enter. Run this as that user or
 # with sudo. In the Docker image (`mode` is `container`) there is no systemd: Docker starts, stops
@@ -16,7 +16,7 @@ UNIT=openbot.service
 
 usage() {
   cat <<'EOF'
-Usage: openbot <command>
+Usage: lbot <command>
 
   status                         Show the account and the server.
   login [<email>] [--name <name>]
@@ -53,7 +53,7 @@ require_host() {
 }
 
 require_root() {
-  [ "$(id -u)" -eq 0 ] || fail "Run this with sudo: sudo openbot $*"
+  [ "$(id -u)" -eq 0 ] || fail "Run this with sudo: sudo lbot $*"
 }
 
 # Stops with the command that shows the log, which is not the same in a container.
@@ -61,7 +61,7 @@ not_answering() {
   if in_container; then
     fail "OpenBot does not answer. Read the log on the host with: docker logs <container>"
   fi
-  fail "OpenBot does not answer. Read the log with: openbot logs"
+  fail "OpenBot does not answer. Read the log with: lbot logs"
 }
 
 # Waits for the socket after a start. A user that cannot enter /run/openbot never sees it.
@@ -69,7 +69,7 @@ wait_for_socket() {
   local second
   for ((second = 0; second < 30; second++)); do
     [ -S "$SOCKET" ] && return 0
-    in_container || systemctl is-active --quiet "$UNIT" || fail "OpenBot is not running. Start it with: sudo openbot start"
+    in_container || systemctl is-active --quiet "$UNIT" || fail "OpenBot is not running. Start it with: sudo lbot start"
     if [ -d /run/openbot ] && [ ! -x /run/openbot ]; then
       fail "Run this with sudo, or as the user $(service_user)."
     fi
@@ -113,9 +113,9 @@ check_answer() {
       invalid_email) message="Enter a valid email address." ;;
       invalid_request) message="Enter the sign-in code or the claim." ;;
       invalid_name) message="Enter a server name." ;;
-      signed_in) message="This server is signed in. To use another account, run: openbot logout" ;;
-      account_signed_out | account_code_sent) message="Sign in first with: openbot login" ;;
-      account_error | account_loading) message="OpenBot could not check the account yet. Run: openbot status" ;;
+      signed_in) message="This server is signed in. To use another account, run: lbot logout" ;;
+      account_signed_out | account_code_sent) message="Sign in first with: lbot login" ;;
+      account_error | account_loading) message="OpenBot could not check the account yet. Run: lbot status" ;;
       session_not_storable) message="This server cannot store the session securely. The claim was not used." ;;
       *) message="OpenBot refused the request ($(value error))." ;;
     esac
@@ -133,8 +133,8 @@ show_status() {
   echo "OpenBot $(value version)"
   case $account in
     signed_in) echo "Account: $(value email)" ;;
-    signed_out) echo "Account: signed out. Sign in with: openbot login" ;;
-    code_sent) echo "Account: waiting for a sign-in code. Run: openbot login" ;;
+    signed_out) echo "Account: signed out. Sign in with: lbot login" ;;
+    code_sent) echo "Account: waiting for a sign-in code. Run: lbot login" ;;
     error) echo "Account: the account server does not answer. $(value account_message)" ;;
     *) echo "Account: $account" ;;
   esac
@@ -147,7 +147,7 @@ show_status() {
     echo "Turns at the same time: at most $(value turn_limit)"
   fi
   staged=$(staged_version)
-  if [ -n "$staged" ]; then echo "OpenBot $staged is ready to install. Run: sudo openbot update"; fi
+  if [ -n "$staged" ]; then echo "OpenBot $staged is ready to install. Run: sudo lbot update"; fi
 }
 
 status_command() {
@@ -191,7 +191,7 @@ login_command() {
     check_answer || exit 1
     email=$(value email)
   else
-    [ -t 0 ] || fail "Run openbot login in a terminal."
+    [ -t 0 ] || fail "Run lbot login in a terminal."
     if [ -z "$email" ]; then read -rp "Email: " email; fi
     # With the name, OpenBot refuses a name that it cannot publish before it sends a code.
     control POST /v1/login/start "email=$email" ${name:+"name=$name"}
@@ -216,7 +216,7 @@ login_command() {
   show_status
   if [ "$(value server)" = online ]; then
     echo "Sign in to OpenBot with $email on your computer or https://openbot.run/app to use this server."
-    echo "To use it from your phone, run: openbot mobile-connect"
+    echo "To use it from your phone, run: lbot mobile-connect"
   fi
 }
 
@@ -246,9 +246,9 @@ restart_after_failed_update() {
   trap '' INT TERM HUP
   [ ! -e "$INSTALL/.applying" ] || "$INSTALL/hosted/openbot-hosted-update" apply || true
   if systemctl start "$UNIT"; then
-    echo "The update failed. OpenBot $(version_of "$INSTALL/app") runs. Try again with: sudo openbot update" >&2
+    echo "The update failed. OpenBot $(version_of "$INSTALL/app") runs. Try again with: sudo lbot update" >&2
   else
-    echo "The update failed, and OpenBot did not start. Read the log with: openbot logs" >&2
+    echo "The update failed, and OpenBot did not start. Read the log with: lbot logs" >&2
   fi
   exit "$status"
 }
@@ -281,7 +281,7 @@ update_command() {
 # /srv/openbot-hosted stay: the keyring has the key of the encrypted data in that home folder, so the
 # two go together, and a later install uses them again.
 uninstall_command() {
-  require_host "run openbot logout, then remove the container on the host. The data stays in its volume"
+  require_host "run lbot logout, then remove the container on the host. The data stays in its volume"
   require_root uninstall
   local user home reply unit entry
   { [ -r "$INSTALL/hosted/mode" ] && [ "$(<"$INSTALL/hosted/mode")" = self ]; } ||
@@ -306,7 +306,7 @@ uninstall_command() {
     [ -d /sys/kernel/security/apparmor ]; then
     apparmor_parser --remove /etc/apparmor.d/openbot-hosted 2>/dev/null || true
   fi
-  rm -f /etc/apparmor.d/openbot-hosted /usr/local/bin/openbot
+  rm -f /etc/apparmor.d/openbot-hosted /usr/local/bin/lbot /usr/local/bin/openbot
   # The desktop .deb also installs into /opt/OpenBot, so only the entries of a server go.
   for entry in app hosted staged staged.ready .applying; do rm -rf "${INSTALL:?}/$entry"; done
   rmdir "$INSTALL" 2>/dev/null || true
@@ -327,7 +327,7 @@ case $command in
     echo "Signed out. The server is not available until the next sign-in."
     ;;
   name)
-    [ "$#" -ge 1 ] || fail "Usage: openbot name <name>"
+    [ "$#" -ge 1 ] || fail "Usage: lbot name <name>"
     control POST /v1/name "name=$*"
     check_answer || exit 1
     show_status

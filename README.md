@@ -86,7 +86,7 @@ To run OpenBot as an always-on server of your account on a VPS or home server (U
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/nightly-labs/openbot/main/scripts/install-server.sh | sudo bash
-sudo openbot login
+sudo lbot login
 ```
 
 Then use it from the desktop app, the iPhone app or `openbot.run/app`. See
@@ -103,7 +103,7 @@ docker run -d --name openbot --restart unless-stopped \
   --security-opt seccomp=seccomp.json --security-opt no-new-privileges:true \
   --shm-size 1g --stop-timeout 60 -v openbot-data:/data \
   ghcr.io/nightly-labs/openbot:latest
-docker exec -it openbot openbot login
+docker exec -it openbot lbot login
 ```
 
 See [Docker](docs/docker.md) for Compose, the data volume, upgrades and the security limits. For Amazon ECS,

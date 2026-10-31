@@ -926,14 +926,14 @@ jobs:
           status=
           for _ in $(seq 1 120); do
             if docker exec openbot test -S /run/openbot/control.sock; then
-              status=$(docker exec openbot openbot status)
+              status=$(docker exec openbot lbot status)
               grep -Fxq "Account: loading" <<<"$status" || break
             fi
             sleep 1
           done
           echo "$status"
           grep -Fxq "OpenBot $RELEASE_VERSION" <<<"$status"
-          grep -Fxq "Account: signed out. Sign in with: openbot login" <<<"$status"
+          grep -Fxq "Account: signed out. Sign in with: lbot login" <<<"$status"
           docker stop --time 60 openbot
           test "$(docker inspect openbot --format '{{.State.ExitCode}}')" = 0
 

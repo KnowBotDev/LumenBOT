@@ -13,7 +13,7 @@ With Docker Compose:
 curl -fsSLO https://raw.githubusercontent.com/nightly-labs/openbot/main/docker/compose.yaml
 curl -fsSLO https://raw.githubusercontent.com/nightly-labs/openbot/main/docker/seccomp.json
 docker compose up -d
-docker compose exec openbot openbot login
+docker compose exec openbot lbot login
 ```
 
 With `docker run`:
@@ -25,11 +25,11 @@ docker run -d --name openbot --restart unless-stopped \
   --shm-size 1g --stop-timeout 60 \
   -v openbot-data:/data \
   ghcr.io/nightly-labs/openbot:latest
-docker exec -it openbot openbot login
+docker exec -it openbot lbot login
 ```
 
-`openbot login` asks for your email and the code that OpenBot sends to it. An operator who sets up
-the container for somebody else can use `openbot login --claim` instead (see
+`lbot login` asks for your email and the code that OpenBot sends to it. An operator who sets up
+the container for somebody else can use `lbot login --claim` instead (see
 [server claims](self-hosted-server.md#sign-in-with-a-server-claim)). After the sign-in, the
 server shows in the server list of that account. Then connect a provider from the app, as on a
 [hosted server](hosted-servers.md#providers).
@@ -37,7 +37,7 @@ server shows in the server list of that account. Then connect a provider from th
 To connect the phone app, show a Mobile Connect code in the terminal and scan it with the app:
 
 ```sh
-docker exec -it openbot openbot mobile-connect
+docker exec -it openbot lbot mobile-connect
 ```
 
 See [Phone app](self-hosted-server.md#phone-app).
@@ -55,7 +55,7 @@ For Amazon ECS, see [AWS ECS](aws-ecs.md).
 
 The container publishes no port. OpenBot only connects out: to the account server, to the providers,
 and to Signal and TURN for remote use. The Team API listens on `127.0.0.1` in the container.
-The container does not serve a web interface. After `openbot login`, use
+The container does not serve a web interface. After `lbot login`, use
 [`openbot.run/app`](https://openbot.run/app) with the same account to select the server. A web
 client at your own origin is not included in this image. The
 [self-hosted account service](self-hosting.md#what-changes) is a separate deployment with its own
@@ -102,7 +102,7 @@ protect a home folder. To back it up, stop the container and copy the volume. An
 
 ## Commands
 
-In the container, `openbot status`, `login`, `mobile-connect`, `logout`, `name` and `version` work as on a
+In the container, `lbot status`, `login`, `mobile-connect`, `logout`, `name` and `version` work as on a
 [self-hosted server](self-hosted-server.md#commands). Do the other tasks with Docker on the host:
 
 | Task | Command |
@@ -110,7 +110,7 @@ In the container, `openbot status`, `login`, `mobile-connect`, `logout`, `name` 
 | Read the log | `docker logs openbot` |
 | Stop, start, restart | `docker stop openbot`, `docker start openbot`, `docker restart openbot` |
 | Upgrade | `docker compose pull && docker compose up -d`, or pull the image and make the container again with the same volume |
-| Remove | `docker exec openbot openbot logout`, then `docker stop openbot && docker rm openbot`. The data stays in the volume. `docker volume rm openbot-data` deletes it. |
+| Remove | `docker exec openbot lbot logout`, then `docker stop openbot && docker rm openbot`. The data stays in the volume. `docker volume rm openbot-data` deletes it. |
 
 ## Several instances on one host
 
@@ -357,7 +357,7 @@ Automation can poll that metadata and download an image. Installation needs thes
    instance of `docker/instances`, set `OPENBOT_TAG` in its env file and run
    `openbot-instance upgrade <name>`. This command takes the lock of the instance, so no backup,
    restore or update from the app runs at the same time. A manual replacement does not take the
-   lock. Check `openbot status` and the container log before the upgrade is reported as complete.
+   lock. Check `lbot status` and the container log before the upgrade is reported as complete.
 
 An unattended image watcher does not perform these checks or make a consistent backup. Keep the
 installation step under operator control unless your own job implements them. A failed upgrade
@@ -373,7 +373,7 @@ message from a person starts first. The browser opens no new tab and unloads idl
 The memory ceiling is the smaller of the memory of the host and the memory limit of the container
 (`--memory`, or `mem_limit` in Compose). Without a limit, the ceiling is the memory of the host. A
 fixed number of turns run at the same time: 2 up to 5 GiB of ceiling, 8 up to 10 GiB, and 16 above.
-`/dev/shm` and the `tmpfs` folders count toward the limit too. `docker exec openbot openbot status`
+`/dev/shm` and the `tmpfs` folders count toward the limit too. `docker exec openbot lbot status`
 shows the ceiling, the free memory, the level (`ok`, `low` or `critical`) and the turn limit.
 
 The guard reads cgroup v2, which current Docker hosts use. On a host with cgroup v1, the container
@@ -446,10 +446,10 @@ does not use systemd.
 ## Not confirmed
 
 - Tested on Docker Desktop 4.45 (Docker Engine 28.3, `linux/arm64`) with the 0.29.0 AppImage and the
-  scripts of this image: the start with the sandbox on, `openbot status`, a restart, a new container
+  scripts of this image: the start with the sandbox on, `lbot status`, a restart, a new container
   on the same volume after a kill, a stop that exits with 0, and the messages for a missing seccomp
   profile and for a volume that the user cannot write. The release workflow also starts each image.
-- Not tested: a sign-in with `openbot login` in a container, remote use of a container from the app,
+- Not tested: a sign-in with `lbot login` in a container, remote use of a container from the app,
   Podman, Kubernetes, rootless Docker, and hosts that restrict user namespaces with AppArmor, such as
   Ubuntu 23.10 or newer. On such a host, the container can need an AppArmor profile that permits
   `userns`.

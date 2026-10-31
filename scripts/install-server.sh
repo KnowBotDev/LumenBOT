@@ -109,7 +109,7 @@ cat <<'EOF'
 
 Next, sign in with your OpenBot account:
 
-  sudo openbot login
+  sudo lbot login
 
-Other commands: openbot status, openbot logs, sudo openbot update. Run "openbot help" for all.
+Other commands: lbot status, lbot logs, sudo lbot update. Run "lbot help" for all.
 EOF

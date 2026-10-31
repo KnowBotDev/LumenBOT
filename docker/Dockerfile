@@ -45,7 +45,8 @@ RUN install -d -m 0755 /var/lib/openbot-update/requests /var/lib/openbot-update/
 COPY --from=release /tmp/squashfs-root /opt/OpenBot/app
 RUN install -d -m 0755 /opt/OpenBot/hosted \
   && printf 'container\n' >/opt/OpenBot/hosted/mode \
-  && ln -s /opt/OpenBot/app/resources/hosting/openbot /usr/local/bin/openbot
+  && ln -s /opt/OpenBot/app/resources/hosting/lbot /usr/local/bin/lbot \
+  && ln -s /usr/local/bin/lbot /usr/local/bin/openbot
 
 ARG VERSION=unknown
 ARG REVISION=unknown

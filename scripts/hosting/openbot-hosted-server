@@ -5,7 +5,7 @@
 #
 # On a self-hosted server (`mode` is `self`, which openbot-server-setup writes) there is no claim and
 # no boat desktop: OpenBot starts with `OPENBOT_SERVER=1` on a virtual display, the agents work on a
-# second one, and its owner signs it in with `openbot login`.
+# second one, and its owner signs it in with `lbot login`.
 set -euo pipefail
 umask 077
 

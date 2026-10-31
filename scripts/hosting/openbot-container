@@ -2,7 +2,7 @@
 # The entrypoint of the OpenBot Docker image (docker/Dockerfile). It runs OpenBot as a self-hosted
 # server, as openbot-hosted-server does on a computer with systemd: a D-Bus session with an unlocked
 # keyring, so that Electron `safeStorage` can keep the account session, two virtual displays, and
-# `OPENBOT_SERVER=1`. Its owner signs it in with `docker exec -it openbot openbot login`.
+# `OPENBOT_SERVER=1`. Its owner signs it in with `docker exec -it openbot lbot login`.
 #
 # It runs as the image user. The home folder of that user is the /data volume, so the database, the
 # workspaces, the provider sign-ins and the keyring stay when the container is replaced. The keyring

@@ -13,12 +13,12 @@ On Ubuntu 24.04 or 26.04 (x86_64 or arm64) with systemd:
 
 ```sh
 curl -fsSL https://raw.githubusercontent.com/nightly-labs/openbot/main/scripts/install-server.sh | sudo bash
-sudo openbot login
+sudo lbot login
 ```
 
-`openbot login` asks for your email and the code that OpenBot sends to it. After the sign-in, the
+`lbot login` asks for your email and the code that OpenBot sends to it. After the sign-in, the
 server shows in the server list of that account. Its name is "OpenBot"; give another one with
-`sudo openbot login --name <name>` or `sudo openbot name <name>`. A name has 6 to 32 characters.
+`sudo lbot login --name <name>` or `sudo lbot name <name>`. A name has 6 to 32 characters.
 Then connect a provider from the app, as on a hosted server (see
 [Providers](hosted-servers.md#providers)).
 
@@ -33,11 +33,11 @@ printf '{"email":"%s"}' owner@example.com |
   curl --fail -sS -X POST https://api.openbot.run/v2/admin/server-claims \
     -H @server-claims.header -H 'content-type: application/json' --data-binary @- |
   sed -n 's/.*"claim":"\([A-Za-z0-9_-]*\)".*/\1/p' |
-  sudo openbot login --claim --name <name>
+  sudo lbot login --claim --name <name>
 ```
 
 `server-claims.header` holds one line, `Authorization: Bearer <token>`, so the token is in no process
-argument. `openbot login --claim` reads the claim from standard input, or asks for it without an echo
+argument. `lbot login --claim` reads the claim from standard input, or asks for it without an echo
 in a terminal, for the same reason.
 
 - `POST /v2/admin/server-claims` needs the `SERVER_CLAIMS_ADMIN_TOKEN` of the account service. It
@@ -69,20 +69,20 @@ open a database that a newer one migrated. It also refuses a computer that is a 
 
 | Command | Use |
 | --- | --- |
-| `openbot status` | Show the version, the account, the server state, the memory and a staged update. |
-| `openbot login [<email>] [--name <name>]` | Sign in with an email code. |
-| `openbot login --claim [--name <name>]` | Sign in with an operator's one-time claim (see [Sign in with a server claim](#sign-in-with-a-server-claim)). |
-| `openbot mobile-connect` | Show a Mobile Connect QR code for the phone app (see [Phone app](#phone-app)). |
-| `openbot logout` | Sign out. The server is not available until the next sign-in. |
-| `openbot name <name>` | Change the server name. |
-| `openbot logs [-f]` | Show the journal of `openbot.service`. |
-| `sudo openbot start\|stop\|restart` | Control `openbot.service`. |
-| `sudo openbot update` | Download, check and install the newest release now. |
-| `sudo openbot uninstall` | Sign out and remove OpenBot. The data stays (see [Remove](#remove)). |
-| `openbot version` | Show the installed version. |
+| `lbot status` | Show the version, the account, the server state, the memory and a staged update. |
+| `lbot login [<email>] [--name <name>]` | Sign in with an email code. |
+| `lbot login --claim [--name <name>]` | Sign in with an operator's one-time claim (see [Sign in with a server claim](#sign-in-with-a-server-claim)). |
+| `lbot mobile-connect` | Show a Mobile Connect QR code for the phone app (see [Phone app](#phone-app)). |
+| `lbot logout` | Sign out. The server is not available until the next sign-in. |
+| `lbot name <name>` | Change the server name. |
+| `lbot logs [-f]` | Show the journal of `openbot.service`. |
+| `sudo lbot start\|stop\|restart` | Control `openbot.service`. |
+| `sudo lbot update` | Download, check and install the newest release now. |
+| `sudo lbot uninstall` | Sign out and remove OpenBot. The data stays (see [Remove](#remove)). |
+| `lbot version` | Show the installed version. |
 
 Run the account commands with `sudo` or as the service user. Other users cannot open the control
-socket.
+socket. The old name `openbot` is a link to `lbot` and still works in this release.
 
 ## Memory
 
@@ -95,7 +95,7 @@ and unloads idle pages sooner. A fixed number of turns run at the same time: 2 u
 The memory ceiling is the smaller of the machine memory and the limit of `openbot.service`
 (`MemoryMax=90%`). To give OpenBot less memory, lower the limit with
 `sudo systemctl edit openbot.service`, for example `MemoryMax=2G`, and restart the service. The
-turn limit and the low-memory levels then use the new ceiling. `openbot status` shows the ceiling,
+turn limit and the low-memory levels then use the new ceiling. `lbot status` shows the ceiling,
 the free memory, the level (`ok`, `low` or `critical`) and the turn limit:
 
 ```text
@@ -117,14 +117,14 @@ The display size does not change the OpenBot browser (`openbot_browser`). Its pa
 size, 1200x800 when no panel shows them, and its clicks go to page elements.
 
 To use another size, give it at the install with `--display-size 1920x1080`, or write this line in
-`/opt/OpenBot/hosted/openbot.env` and run `sudo openbot restart`:
+`/opt/OpenBot/hosted/openbot.env` and run `sudo lbot restart`:
 
 ```text
 OPENBOT_DISPLAY_SIZE=1920x1080
 ```
 
 The value is `WIDTHxHEIGHT` in digits, from 640x480 to 2576x2576. The install refuses a value that is
-not valid. At a start, a value that is not valid writes this warning in `openbot logs`, and the
+not valid. At a start, a value that is not valid writes this warning in `lbot logs`, and the
 server starts with 1280x800:
 
 ```text
@@ -192,10 +192,10 @@ A 1280x800 screenshot is not made smaller by any Claude or Codex model.
 ## Phone app
 
 The phone app has no email sign-in. It signs in with a Mobile Connect code. A server has no screen
-for the code, so `openbot mobile-connect` shows it in the terminal:
+for the code, so `lbot mobile-connect` shows it in the terminal:
 
-1. Sign in the server with `openbot login`.
-2. Run `openbot mobile-connect`. In a container, run `docker exec -it <container> openbot mobile-connect`.
+1. Sign in the server with `lbot login`.
+2. Run `lbot mobile-connect`. In a container, run `docker exec -it <container> lbot mobile-connect`.
 3. In the phone app, select **Scan QR code** and scan the code in the terminal.
 
 The code signs the phone in to the account of the server. It works for one sign-in and expires after
@@ -209,7 +209,7 @@ already in its server list. Remove a phone from the account in the desktop app, 
 
 ## Remove
 
-`sudo openbot uninstall` signs out, then removes the service, the units, the AppArmor profile, the
+`sudo lbot uninstall` signs out, then removes the service, the units, the AppArmor profile, the
 `openbot` command and the server files in `/opt/OpenBot`. It keeps the home folder of the service user
 and the keyring in `/srv/openbot-hosted`. The keyring has the key of the encrypted data in that home
 folder, so keep or delete the two together. An install with the same `--user` uses them again. To
@@ -248,7 +248,7 @@ processes, so an agent's screenshot and remote desktop do not show the OpenBot w
 
 Updates work as on a hosted server (see [Updates](hosted-servers.md#updates)): the timer stages a
 new release, and it starts at the next boot, or when an owner, an admin or a permitted member
-installs it in Server Settings > Updates. `sudo openbot update` stages, stops the service, applies
+installs it in Server Settings > Updates. `sudo lbot update` stages, stops the service, applies
 and starts the service again. When a step fails or a signal stops it, the command completes an
 interrupted copy, starts the service, and exits with an error.
 
@@ -278,7 +278,7 @@ Threat model:
   the install uses those names.
 - Ubuntu 26.04: release 0.48.1 was tested on Ubuntu 26.04.1 arm64 in the Docker image, with
   `BASE=ubuntu:26.04` and the package list without `libminiupnpc17` (the 0.48.1 list stops that
-  build). The server started with the Electron sandbox on, `openbot status` answered, and it stopped
+  build). The server started with the Electron sandbox on, `lbot status` answered, and it stopped
   with exit code 0. The install with systemd and a native x86_64 run were not tested.
 - Remote desktop on Ubuntu 26.04: the runtime build checks with `ldd` that the x86_64 runtime finds
   all its libraries there (see [Linux runtime](RELEASING.md#linux-runtime-recipe-16)). In the x86_64
