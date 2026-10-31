@@ -74,9 +74,11 @@ import type {
   AgentEval,
   AgentEvalRun,
   DeleteAgentEvalInput,
+  FinishAgentEvalRunInput,
   ListAgentEvalRunsInput,
   ListAgentEvalsInput,
   SaveAgentEvalInput,
+  StartAgentEvalRunInput,
 } from "./ipc-agent-evals";
 import type {
   AgentProfileDraft,
@@ -1337,6 +1339,8 @@ export const IPC_ENDPOINTS = {
     saveEval: request<SaveAgentEvalInput, AgentEval>()("agent-evals:save"),
     deleteEval: request<DeleteAgentEvalInput, void>()("agent-evals:delete"),
     listEvalRuns: request<ListAgentEvalRunsInput, AgentEvalRun[]>()("agent-evals:list-runs"),
+    startRun: request<StartAgentEvalRunInput, AgentEvalRun>()("agent-evals:start-run"),
+    finishRun: request<FinishAgentEvalRunInput, AgentEvalRun>()("agent-evals:finish-run"),
   },
   sharedTables: {
     // Shared tables are not scoped to an agent: there is no `agentId` on either call. The list is

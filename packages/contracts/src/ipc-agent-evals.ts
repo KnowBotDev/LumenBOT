@@ -59,6 +59,20 @@ export interface RunAgentEvalInput {
   evalId: string;
 }
 
+/** Starts a manual run: the user sends the prompt and then decides whether it passed. */
+export interface StartAgentEvalRunInput {
+  agentId: string;
+  evalId: string;
+}
+
+/** The user's own verdict on a run, with an optional note. */
+export interface FinishAgentEvalRunInput {
+  agentId: string;
+  runId: string;
+  passed: boolean;
+  verdict: string | null;
+}
+
 export interface ListAgentEvalRunsInput {
   agentId: string;
   evalId: string;

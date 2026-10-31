@@ -2,9 +2,11 @@ import { Effect } from "effect";
 import { isDynamicRecord, isString } from "@openbot/contracts/runtime-values";
 import type {
   DeleteAgentEvalInput,
+  FinishAgentEvalRunInput,
   ListAgentEvalRunsInput,
   ListAgentEvalsInput,
   SaveAgentEvalInput,
+  StartAgentEvalRunInput,
 } from "@openbot/contracts/ipc";
 import type { AgentEvalsStore } from "../../backend/agent-evals-store";
 import { runCauseEffect } from "../../backend/effect-boundary";
@@ -57,6 +59,22 @@ function parseRuns(value: unknown): ListAgentEvalRunsInput {
   return { ...reference, ...(limit === undefined ? {} : { limit }) };
 }
 
+function parseStart(value: unknown): StartAgentEvalRunInput {
+  return parseRef(value);
+}
+
+function parseFinish(value: unknown): FinishAgentEvalRunInput {
+  if (
+    !isDynamicRecord(value) ||
+    !isString(value.agentId) ||
+    !isString(value.runId) ||
+    typeof value.passed !== "boolean" ||
+    (value.verdict !== null && !isString(value.verdict))
+  )
+    throw new Error("The evaluation verdict is not valid.");
+  return { agentId: value.agentId, runId: value.runId, passed: value.passed, verdict: value.verdict };
+}
+
 export function agentEvalsIpcHandlers({
   store,
 }: AgentEvalsIpcDependencies): Pick<IpcGroupHandlers, "agentEvals"> {
@@ -74,6 +92,16 @@ export function agentEvalsIpcHandlers({
       listEvalRuns: payloadHandler(parseRuns, (input) =>
         runCauseEffect(
           store.listRuns(input.agentId, input.evalId, input.limit).pipe(Effect.mapError((cause) => ({ cause }))),
+        ),
+      ),
+      startRun: payloadHandler(parseStart, (input) =>
+        runCauseEffect(store.startRun(input.agentId, input.evalId).pipe(Effect.mapError((cause) => ({ cause })))),
+      ),
+      finishRun: payloadHandler(parseFinish, (input) =>
+        runCauseEffect(
+          store
+            .finishRun(input.agentId, input.runId, input.passed, input.verdict)
+            .pipe(Effect.mapError((cause) => ({ cause }))),
         ),
       ),
     },

@@ -132,6 +132,54 @@ export class AgentEvalsStore {
     );
   }
 
+  startRun(agentId: string, evalId: string): Effect.Effect<AgentEvalRun, Error> {
+    return this.#lock.withPermit(
+      Effect.gen({ self: this }, function* () {
+        const stored = yield* this.#read();
+        const known = stored.evals.some((entry) => entry.agentId === agentId && entry.id === evalId);
+        if (!known) return yield* Effect.fail(new Error("The evaluation does not exist."));
+        const run: AgentEvalRun = {
+          id: randomUUID(),
+          evalId,
+          status: "running",
+          answer: null,
+          verdict: null,
+          judgeModel: null,
+          startedAt: new Date().toISOString(),
+          finishedAt: null,
+        };
+        const runs = keepNewestPerEval([...stored.runs, run], AGENT_EVAL_RUNS_KEPT);
+        yield* this.#write({ ...stored, runs });
+        return run;
+      }),
+    );
+  }
+
+  finishRun(
+    agentId: string,
+    runId: string,
+    passed: boolean,
+    verdict: string | null,
+  ): Effect.Effect<AgentEvalRun, Error> {
+    return this.#lock.withPermit(
+      Effect.gen({ self: this }, function* () {
+        const stored = yield* this.#read();
+        const current = stored.runs.find((run) => run.id === runId);
+        if (!current) return yield* Effect.fail(new Error("The evaluation run does not exist."));
+        const owned = stored.evals.some((entry) => entry.agentId === agentId && entry.id === current.evalId);
+        if (!owned) return yield* Effect.fail(new Error("The evaluation run belongs to another agent."));
+        const finished: AgentEvalRun = {
+          ...current,
+          status: passed ? "passed" : "failed",
+          verdict,
+          finishedAt: new Date().toISOString(),
+        };
+        yield* this.#write({ ...stored, runs: stored.runs.map((run) => (run.id === runId ? finished : run)) });
+        return finished;
+      }),
+    );
+  }
+
   appendRun(run: AgentEvalRun): Effect.Effect<void, Error> {
     return this.#lock.withPermit(
       Effect.gen({ self: this }, function* () {

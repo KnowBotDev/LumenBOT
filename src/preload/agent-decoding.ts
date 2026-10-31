@@ -203,6 +203,11 @@ export function decodeAgentEvalRuns(value: unknown): AgentEvalRun[] {
   return value;
 }
 
+export function decodeAgentEvalRun(value: unknown): AgentEvalRun {
+  if (!isAgentEvalRun(value)) throw new Error("Invalid agent evaluation run response.");
+  return value;
+}
+
 export function decodeTables(value: unknown): SharedTable[] {
   if (!Array.isArray(value) || !value.every(isSharedTable)) throw new Error("Invalid shared tables response.");
   return value;

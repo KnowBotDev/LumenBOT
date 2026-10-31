@@ -84,6 +84,7 @@ import {
   decodeAgents,
   decodeAutomationRunCommand,
   decodeAgentEval,
+  decodeAgentEvalRun,
   decodeAgentEvals,
   decodeAgentEvalRuns,
   decodeDuplicateAgentResultFromMain,
@@ -1018,6 +1019,8 @@ const openbotApi: OpenBotDesktopApi = {
     saveEval: decodeAgentEval,
     deleteEval: decodeVoid,
     listEvalRuns: decodeAgentEvalRuns,
+    startRun: decodeAgentEvalRun,
+    finishRun: decodeAgentEvalRun,
   }),
   agent: {
     ...agentGroup,

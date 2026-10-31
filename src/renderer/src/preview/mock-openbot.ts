@@ -1649,6 +1649,26 @@ export function createMockOpenBot(options: MockOpenBotOptions = {}): MockOpenBot
       },
       deleteEval: async () => undefined,
       listEvalRuns: async () => [],
+      startRun: async (input) => ({
+        id: crypto.randomUUID(),
+        evalId: input.evalId,
+        status: "running",
+        answer: null,
+        verdict: null,
+        judgeModel: null,
+        startedAt: new Date().toISOString(),
+        finishedAt: null,
+      }),
+      finishRun: async (input) => ({
+        id: input.runId,
+        evalId: "",
+        status: input.passed ? "passed" : "failed",
+        answer: null,
+        verdict: input.verdict,
+        judgeModel: null,
+        startedAt: new Date().toISOString(),
+        finishedAt: new Date().toISOString(),
+      }),
     },
     agent: {
       getStatus: async (serverId) =>
